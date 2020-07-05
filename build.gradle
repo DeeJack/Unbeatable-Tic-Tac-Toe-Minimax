@@ -30,5 +30,12 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'me.deejack.tris.App'
+    mainClassName = 'me.deejack.tris.Tris'
+}
+
+jar {
+    manifest {
+    attributes(
+        "Main-Class": 'me.deejack.tris.Tris')
+    }
 }

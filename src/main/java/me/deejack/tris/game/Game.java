@@ -51,12 +51,12 @@ public abstract class Game {
     protected abstract void afterTurn();
 
     public void start() {
-        if (players[0].getSymbol() == players[1].getSymbol()) {
+        beforeStart();
+        if (players[0].getSymbol().equals(players[1].getSymbol())) {
             players[0].sendMessage("You can't have the same symbol!");
             players[1].sendMessage("You can't have the same symbol!");
             return;
         }
-        beforeStart();
         do {
             beforeTurn();
             onTurn();

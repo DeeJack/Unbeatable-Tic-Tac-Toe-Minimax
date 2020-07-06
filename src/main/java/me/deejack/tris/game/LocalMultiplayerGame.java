@@ -2,37 +2,40 @@ package me.deejack.tris.game;
 
 import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
+import me.deejack.tris.players.LocalPlayer;
 import me.deejack.tris.players.Player;
 
 public class LocalMultiplayerGame extends Game {
+    private final LocalPlayer[] players = new LocalPlayer[2];
 
-    public LocalMultiplayerGame(Player firstPlayer, Player secondPlayer, int columns) {
-        super(firstPlayer, secondPlayer, new DefaultGameLogic(columns), columns);
-        // TODO Auto-generated constructor stub
+    public LocalMultiplayerGame(int columns) {
+        super(new LocalPlayer(), new LocalPlayer(), new DefaultGameLogic(columns), columns);
+        players[0] = (LocalPlayer) getPlayers()[0];
+        players[1] = (LocalPlayer) getPlayers()[1];
     }
 
     @Override
     protected void beforeStart() {
-        // TODO Auto-generated method stub
-
+        System.out.println("------------P1---------------");
+        players[0].askName();
+        players[0].askSymbol();
+        System.out.println("------------P2---------------");
+        players[1].askName();
+        players[1].askSymbol();
     }
 
     @Override
     protected void beforeTurn() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
-    protected void onFinish(Results results) {
-        // TODO Auto-generated method stub
-
+    protected void onFinish(Results result) {
+        System.out.println(result);
     }
 
     @Override
     protected void afterTurn() {
-        // TODO Auto-generated method stub
-
+        System.out.println(getBoard().toString());
     }
-    
 }

@@ -1,6 +1,6 @@
 package me.deejack.tris.board;
 
-import me.deejack.tris.game.PlayerSymbol;
+import me.deejack.tris.players.PlayerSymbol;
 
 public class Cell {
     private boolean empty = true;

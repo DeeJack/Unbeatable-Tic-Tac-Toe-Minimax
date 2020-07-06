@@ -1,12 +1,14 @@
 package me.deejack.tris.board;
 
-import me.deejack.tris.game.PlayerSymbol;
+import me.deejack.tris.players.PlayerSymbol;
 
 public class Board {
     private Cell[][] cells;
     private final int columns;
 
     public Board(int columns) {
+        if (columns < 3)
+            throw new IllegalArgumentException("At least 3 columns!");
         cells = new Cell[columns][columns];
         this.columns = columns;
         createEmptyBoard();
@@ -34,6 +36,10 @@ public class Board {
 
     public Cell[][] getCells() {
         return cells.clone();
+    }
+
+    public int getColumns() {
+        return columns;
     }
 
     @Override

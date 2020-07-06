@@ -1,4 +1,4 @@
-package me.deejack.tris.game;
+package me.deejack.tris.players;
 
 public class PlayerSymbol {
     private final char symbol;

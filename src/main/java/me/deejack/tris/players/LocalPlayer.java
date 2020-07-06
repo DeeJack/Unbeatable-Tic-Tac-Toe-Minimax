@@ -2,7 +2,7 @@ package me.deejack.tris.players;
 
 import java.util.Scanner;
 
-public class LocalPlayer implements Player {
+public class LocalPlayer extends DefaultPlayer {
     private final Scanner scanner = new Scanner(System.in);
     private String name;
     private PlayerSymbol symbol;
@@ -66,16 +66,6 @@ public class LocalPlayer implements Player {
         char symbol = input[0];
         System.out.println("Your symbol is: " + symbol);
         this.symbol = new PlayerSymbol(symbol);
-    }
-
-    @Override
-    public int getWins() {
-        return 0;
-    }
-
-    @Override
-    public int getTotalPlays() {
-        return 0;
     }
 
     @Override

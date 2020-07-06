@@ -66,6 +66,22 @@ public abstract class Game {
 
     protected abstract void onFinish(Results result);
 
+    public void afterFinish(Results result) {
+        int playerOne = 0; // draw
+        switch (result) {
+            case WIN_P1:
+                playerOne = 1;
+                break;
+            case WIN_P2:
+                playerOne = -1;
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+        players[0].addResult(playerOne);
+        players[1].addResult(playerOne * -1);
+    }
+
     protected Player[] getPlayers() {
         return players;
     }

@@ -2,7 +2,7 @@ package me.deejack.tris.players;
 
 import java.util.Random;
 
-public class ComputerPlayer implements Player {
+public class ComputerPlayer extends DefaultPlayer {
     private PlayerSymbol symbol = new PlayerSymbol('O');
     private String name;
 
@@ -33,18 +33,6 @@ public class ComputerPlayer implements Player {
     @Override
     public String getInput(String question) {
         return "";
-    }
-
-    @Override
-    public int getWins() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public int getTotalPlays() {
-        // TODO Auto-generated method stub
-        return 0;
     }
 
     @Override

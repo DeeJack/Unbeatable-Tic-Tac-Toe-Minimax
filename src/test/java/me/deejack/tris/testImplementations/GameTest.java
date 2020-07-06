@@ -2,7 +2,6 @@ package me.deejack.tris.testImplementations;
 
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.logic.DefaultGameLogic;
-import me.deejack.tris.game.logic.GameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.Player;
 

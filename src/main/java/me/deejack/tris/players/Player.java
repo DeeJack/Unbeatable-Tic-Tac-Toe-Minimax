@@ -11,7 +11,16 @@ public interface Player {
 
     public int getWins();
 
-    public int getTotalPlays();
+    public int getLosses();
+
+    public int getDraws();
+
+    /**
+     * -1 = loss
+     * 0 = draw
+     * 1 = win
+     */
+    public void addResult(int result);
 
     public void sendMessage(String message);
 }

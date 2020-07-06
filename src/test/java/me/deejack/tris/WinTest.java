@@ -2,8 +2,6 @@ package me.deejack.tris;
 
 import org.junit.Test;
 
-import me.deejack.tris.game.logic.DefaultGameLogic;
-import me.deejack.tris.game.logic.GameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.testImplementations.GameTest;
 import me.deejack.tris.testImplementations.TestComputerPlayer;

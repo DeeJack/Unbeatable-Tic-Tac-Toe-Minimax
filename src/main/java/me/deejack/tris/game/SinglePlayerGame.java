@@ -9,7 +9,7 @@ public class SinglePlayerGame extends Game {
     private final LocalPlayer player;
 
     public SinglePlayerGame(int columns) {
-        super(new LocalPlayer(), new ComputerPlayer(), new DefaultGameLogic(columns), columns);
+        super(new LocalPlayer(0), new ComputerPlayer(), new DefaultGameLogic(columns), columns);
         this.player = (LocalPlayer) super.getPlayers()[0];
     }
 

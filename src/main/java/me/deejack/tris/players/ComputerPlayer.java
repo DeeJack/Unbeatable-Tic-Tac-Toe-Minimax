@@ -7,6 +7,7 @@ public class ComputerPlayer extends DefaultPlayer {
     private String name;
 
     public ComputerPlayer(PlayerSymbol symbol, String name) {
+        super(1);
         this.symbol = symbol;
         this.name = name;
     }

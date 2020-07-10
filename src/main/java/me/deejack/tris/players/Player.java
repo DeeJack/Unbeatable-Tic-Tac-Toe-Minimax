@@ -15,6 +15,8 @@ public interface Player {
 
     public int getDraws();
 
+    public int getIndex();
+
     /**
      * -1 = loss
      * 0 = draw

@@ -1,7 +1,6 @@
 package me.deejack.tris;
 
 import me.deejack.tris.game.LocalMultiplayerGame;
-import me.deejack.tris.game.SinglePlayerGame;
 
 public class Tris {
     public static void main(String[] args) {

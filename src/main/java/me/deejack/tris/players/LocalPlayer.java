@@ -7,11 +7,12 @@ public class LocalPlayer extends DefaultPlayer {
     private String name;
     private PlayerSymbol symbol;
 
-    public LocalPlayer() {
-        this("Unknown", new PlayerSymbol('?'));
+    public LocalPlayer(int index) {
+        this("Unknown", new PlayerSymbol('?'), index);
     }
 
-    public LocalPlayer(String name, PlayerSymbol symbol) {
+    public LocalPlayer(String name, PlayerSymbol symbol, int index) {
+        super(index);
         this.name = name;
         this.symbol = symbol;
     }

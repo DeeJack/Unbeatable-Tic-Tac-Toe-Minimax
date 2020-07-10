@@ -1,5 +1,6 @@
 package me.deejack.tris.board;
 
+import me.deejack.tris.players.Player;
 import me.deejack.tris.players.PlayerSymbol;
 
 public class Board {
@@ -22,15 +23,15 @@ public class Board {
         }
     }
 
-    public boolean changeCellStatus(int row, int column, PlayerSymbol symbol) {
+    public boolean changeCellStatus(int row, int column, Player player) {
         if (row < 0 || column < 0 || 
             row > columns - 1 || column > columns - 1)
             return false;
         if (!cells[row][column].isEmpty())
             return false;
-        if (symbol == null)
+        if (player.getSymbol() == null)
             return false;
-        cells[row][column].setSymbol(symbol);
+        cells[row][column].setSymbol(player.getSymbol(), player.getIndex());
         return true;
     }
 

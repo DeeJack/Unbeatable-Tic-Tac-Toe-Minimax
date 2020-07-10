@@ -3,6 +3,7 @@ package me.deejack.tris.game.logic;
 import java.util.Arrays;
 
 import me.deejack.tris.board.Board;
+import me.deejack.tris.board.Cell;
 
 public class DefaultGameLogic implements GameLogic {
     private final byte[] counters;
@@ -13,6 +14,11 @@ public class DefaultGameLogic implements GameLogic {
         this.counters = new byte[columns * 2 + 2];
         this.columns = columns;
         Arrays.fill(counters, (byte)0);
+    }
+
+    public DefaultGameLogic(int columns, Cell[][] board) {
+        this(columns);
+        
     }
 
     @Override
@@ -28,8 +34,6 @@ public class DefaultGameLogic implements GameLogic {
         if (modifiedColumn == modifiedRow)
             counters[columns * 2] += playerValue;
 
-        // TODO: Obliqua al contrario
-
         if (Math.abs(counters[modifiedRow]) == columns)
             return winningPlayer;
         if (Math.abs(counters[columns + modifiedColumn]) == columns)
@@ -43,4 +47,15 @@ public class DefaultGameLogic implements GameLogic {
         return Results.NONE;
     }
 
+    public static Results checkAll(byte[][] board) {
+        var logic = new DefaultGameLogic(board.length);
+        var result = Results.NONE;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] != 0)
+                    result = logic.checkWin(i, j, board[i][j] == 1 ? 0 : -1);
+            }
+        }
+        return result;
+    }
 }

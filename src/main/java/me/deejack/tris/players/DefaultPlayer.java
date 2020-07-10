@@ -4,6 +4,11 @@ public abstract class DefaultPlayer implements Player {
     private int wins = 0;
     private int losses = 0;
     private int draws = 0;
+    private int index = 0;
+
+    public DefaultPlayer(int index) {
+        this.index = index;
+    }
 
     @Override
     public void addResult(int result) {
@@ -35,5 +40,10 @@ public abstract class DefaultPlayer implements Player {
     @Override
     public int getLosses() {
         return losses;
+    }
+
+    @Override
+    public int getIndex() {
+        return index;
     }
 }

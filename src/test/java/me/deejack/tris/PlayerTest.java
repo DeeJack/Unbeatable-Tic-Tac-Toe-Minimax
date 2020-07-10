@@ -16,7 +16,7 @@ public class PlayerTest {
         String input = "AsD\nx\n";
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
-        var player = new LocalPlayer();
+        var player = new LocalPlayer(0);
         player.askName();
         player.askSymbol();
 
@@ -28,7 +28,7 @@ public class PlayerTest {
 
     @Test
     public void testHumanPlayerInput() {
-        var humanPlayer = new LocalPlayer("asd", new PlayerSymbol('x'));
+        var humanPlayer = new LocalPlayer("asd", new PlayerSymbol('x'), 0);
         
     }
 }

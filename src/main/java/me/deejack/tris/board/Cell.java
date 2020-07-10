@@ -5,6 +5,7 @@ import me.deejack.tris.players.PlayerSymbol;
 public class Cell {
     private boolean empty = true;
     private PlayerSymbol symbol;
+    private int player = -1;
     private final int row;
     private final int column;
 
@@ -17,9 +18,14 @@ public class Cell {
         this.column = column;
     }
 
-    public void setSymbol(PlayerSymbol symbol) {
+    public void setSymbol(PlayerSymbol symbol, int player) {
         empty = false;
         this.symbol = symbol;
+        this.player = player;
+    }
+
+    public int getPlayer() {
+        return player;
     }
 
     public PlayerSymbol getSymbol() {

@@ -9,7 +9,7 @@ public class LocalMultiplayerGame extends Game {
     private final LocalPlayer[] players = new LocalPlayer[2];
 
     public LocalMultiplayerGame(int columns) {
-        super(new LocalPlayer(), new LocalPlayer(), new DefaultGameLogic(columns), columns);
+        super(new LocalPlayer(0), new LocalPlayer(1), new DefaultGameLogic(columns), columns);
         players[0] = (LocalPlayer) getPlayers()[0];
         players[1] = (LocalPlayer) getPlayers()[1];
     }

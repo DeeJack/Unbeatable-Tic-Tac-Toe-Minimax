@@ -35,7 +35,7 @@ public abstract class Game {
         do {
             row = currentPlayer.getIntInput("Row: ");
             column = currentPlayer.getIntInput("Column: ");
-            result = board.changeCellStatus(row, column, currentPlayer.getSymbol());
+            result = board.changeCellStatus(row, column, currentPlayer);
             if (!result)
                 currentPlayer.sendMessage("Incorrect data, please try again");
         } while (!result);

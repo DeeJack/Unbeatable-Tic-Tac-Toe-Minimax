@@ -1,6 +1,9 @@
-package me.deejack.tris.players;
+package me.deejack.tris.players.types;
 
 import java.util.Scanner;
+
+import me.deejack.tris.players.DefaultPlayer;
+import me.deejack.tris.players.PlayerSymbol;
 
 public class LocalPlayer extends DefaultPlayer {
     private final Scanner scanner = new Scanner(System.in);

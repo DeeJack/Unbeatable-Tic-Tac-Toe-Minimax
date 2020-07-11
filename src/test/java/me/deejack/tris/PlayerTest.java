@@ -2,7 +2,7 @@ package me.deejack.tris;
 
 import org.junit.Test;
 
-import me.deejack.tris.players.LocalPlayer;
+import me.deejack.tris.players.types.LocalPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
 import static org.junit.Assert.*;

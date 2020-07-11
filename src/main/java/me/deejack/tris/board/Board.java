@@ -1,7 +1,6 @@
 package me.deejack.tris.board;
 
 import me.deejack.tris.players.Player;
-import me.deejack.tris.players.PlayerSymbol;
 
 public class Board {
     private Cell[][] cells;
@@ -24,8 +23,7 @@ public class Board {
     }
 
     public boolean changeCellStatus(int row, int column, Player player) {
-        if (row < 0 || column < 0 || 
-            row > columns - 1 || column > columns - 1)
+        if (row < 0 || column < 0 || row > columns - 1 || column > columns - 1)
             return false;
         if (!cells[row][column].isEmpty())
             return false;
@@ -48,10 +46,7 @@ public class Board {
         StringBuilder builder = new StringBuilder();
         for (var rows : cells) {
             for (var cell : rows) {
-                builder.append(
-                    cell.isEmpty() ? 
-                        ' ' : cell.getSymbol()
-                ).append(" | ");
+                builder.append(cell.isEmpty() ? ' ' : cell.getSymbol()).append(" | ");
             }
             builder.delete(builder.length() - 2, builder.length());
             builder.append("\n");

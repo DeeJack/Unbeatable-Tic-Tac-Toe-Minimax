@@ -8,7 +8,7 @@ import org.junit.Test;
 import me.deejack.tris.board.Board;
 import me.deejack.tris.board.Cell;
 import me.deejack.tris.minimax.Minimax;
-import me.deejack.tris.players.LocalPlayer;
+import me.deejack.tris.players.types.LocalPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
 import static org.junit.Assert.*;

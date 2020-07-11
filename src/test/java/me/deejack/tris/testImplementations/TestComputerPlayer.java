@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import me.deejack.tris.players.ComputerPlayer;
+import me.deejack.tris.players.types.RandomComputerPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
-public class TestComputerPlayer extends ComputerPlayer {
+public class TestComputerPlayer extends RandomComputerPlayer {
     private Queue<Integer> inputs = new LinkedList<Integer>();
 
     public TestComputerPlayer(char symbol, String name) {

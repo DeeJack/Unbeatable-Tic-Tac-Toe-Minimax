@@ -1,18 +1,21 @@
-package me.deejack.tris.players;
+package me.deejack.tris.players.types;
 
 import java.util.Random;
 
-public class ComputerPlayer extends DefaultPlayer {
+import me.deejack.tris.players.DefaultPlayer;
+import me.deejack.tris.players.PlayerSymbol;
+
+public class RandomComputerPlayer extends DefaultPlayer {
     private PlayerSymbol symbol = new PlayerSymbol('O');
     private String name;
 
-    public ComputerPlayer(PlayerSymbol symbol, String name) {
+    public RandomComputerPlayer(PlayerSymbol symbol, String name) {
         super(1);
         this.symbol = symbol;
         this.name = name;
     }
 
-    public ComputerPlayer() {
+    public RandomComputerPlayer() {
         this(new PlayerSymbol('O'), "PC0");
     }
 

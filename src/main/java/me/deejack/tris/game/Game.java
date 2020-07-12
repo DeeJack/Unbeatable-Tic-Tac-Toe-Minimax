@@ -1,15 +1,21 @@
 package me.deejack.tris.game;
 
 import me.deejack.tris.board.Board;
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.logic.GameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.Player;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 public abstract class Game {
     private final Board board;
     private final Player[] players = new Player[2];
     private final GameLogic logic;
-    private int round = 0;
+    private AtomicInteger round = new AtomicInteger(0);
     private boolean finished = false;
     private Results result = Results.NONE;
 
@@ -22,61 +28,68 @@ public abstract class Game {
         this.board = new Board(columns);
     }
 
-    protected abstract void beforeStart();
+    protected abstract CompletableFuture<Void> beforeStart();
 
-    protected abstract void beforeTurn();
+    protected abstract CompletableFuture<Void> beforeTurn();
 
-    protected void onTurn() {
-        var currentPlayer = players[round % 2];
-        currentPlayer.sendMessage("It's your turn, " + currentPlayer.getName());
-        int row;
-        int column; 
-        boolean result;
-        do {
-            row = currentPlayer.getIntInput("Row: ");
-            column = currentPlayer.getIntInput("Column: ");
-            result = board.changeCellStatus(row, column, currentPlayer);
-            if (!result)
-                currentPlayer.sendMessage("Incorrect data, please try again");
-        } while (!result);
-        var gameResult = logic.checkWin(row, column, round % 2);
-        if (gameResult != Results.NONE) {
-            onFinish(gameResult);
-            this.result = gameResult;
-            finished = true;
-        }
-        round++;
+    protected CompletableFuture<Void> onTurn() {
+        var currentPlayer = players[round.get() % 2];
+        var future = CompletableFuture.runAsync(() -> {
+            currentPlayer.sendMessage("It's your turn, " + currentPlayer.getName());
+            Cell choosenCell;
+            boolean result;
+            do {
+                choosenCell = currentPlayer.getNextMove(board).join();
+                result = board.changeCellStatus(choosenCell.getRow(), choosenCell.getColumn(), currentPlayer);
+                if (!result)
+                    currentPlayer.sendMessage("Incorrect data, please try again").join();
+            } while (!result);
+            var gameResult = logic.checkWin(choosenCell.getRow(), choosenCell.getColumn(), round.get() % 2);
+            if (gameResult != Results.NONE) {
+                onFinish(gameResult);
+                this.result = gameResult;
+                finished = true;
+            }
+            round.incrementAndGet();
+        });
+        return future;
     }
 
-    protected abstract void afterTurn();
+    protected abstract CompletableFuture<Void> afterTurn();
 
-    public void start() {
-        beforeStart();
-        if (players[0].getSymbol().equals(players[1].getSymbol())) {
-            players[0].sendMessage("You can't have the same symbol!");
-            players[1].sendMessage("You can't have the same symbol!");
-            return;
-        }
-        do {
-            beforeTurn();
-            onTurn();
-            afterTurn();
-        } while (!finished);
+    public CompletableFuture<Results> start() {
+        CompletableFuture<Results> future = CompletableFuture.supplyAsync(() -> {
+            beforeStart().join();
+            /*
+             * if (players[0].getSymbol().equals(players[1].getSymbol())) { players[0].
+             * sendMessage("You can't have the same symbol, your symbol has been changed to another one!"
+             * ); players[1].
+             * sendMessage("You can't have the same symbol, your symbol has been changed to another one!"
+             * ); return completedFuture(Results.NONE); }
+             */
+            do {
+                beforeTurn().join();
+                onTurn().join();
+                afterTurn().join();
+            } while (!finished);
+            return result;
+        });
+        return future;
     }
 
-    protected abstract void onFinish(Results result);
+    protected abstract CompletableFuture<Void> onFinish(Results result);
 
     public void afterFinish(Results result) {
         int playerOne = 0; // draw
         switch (result) {
-            case WIN_P1:
-                playerOne = 1;
-                break;
-            case WIN_P2:
-                playerOne = -1;
-                break;
-            default:
-                throw new IllegalStateException();
+        case WIN_P1:
+            playerOne = 1;
+            break;
+        case WIN_P2:
+            playerOne = -1;
+            break;
+        default:
+            throw new IllegalStateException();
         }
         players[0].addResult(playerOne);
         players[1].addResult(playerOne * -1);
@@ -85,11 +98,11 @@ public abstract class Game {
     protected Player[] getPlayers() {
         return players;
     }
-    
+
     public int getRound() {
-        return round;
+        return round.get();
     }
-    
+
     public Board getBoard() {
         return board;
     }

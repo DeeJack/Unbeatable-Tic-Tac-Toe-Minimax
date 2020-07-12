@@ -1,5 +1,7 @@
 package me.deejack.tris.board;
 
+import java.util.Arrays;
+
 import me.deejack.tris.players.Player;
 
 public class Board {
@@ -12,6 +14,11 @@ public class Board {
         cells = new Cell[columns][columns];
         this.columns = columns;
         createEmptyBoard();
+    }
+
+    public Board(Cell[][] cells) {
+        this.cells = copyBoard(cells);
+        this.columns = cells.length;
     }
 
     private void createEmptyBoard() {
@@ -41,6 +48,11 @@ public class Board {
         return columns;
     }
 
+    public Cell[] getEmptyCells() {
+        return Arrays.stream(cells).flatMap((Cell[] row) -> Arrays.stream(row)).filter(cell -> cell.isEmpty())
+                .toArray(Cell[]::new);
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -52,5 +64,20 @@ public class Board {
             builder.append("\n");
         }
         return builder.toString();
+    }
+
+    public Board deepCopy() {
+        return new Board(cells);
+    }
+
+    /**
+     * Create a copy of a 2 dimensional array of bytes
+     * 
+     * @param board
+     *                  The 2D byte array
+     * @return the copy of the array
+     */
+    private Cell[][] copyBoard(Cell[][] board) {
+        return Arrays.stream(board).map(Cell[]::clone).toArray(Cell[][]::new);
     }
 }

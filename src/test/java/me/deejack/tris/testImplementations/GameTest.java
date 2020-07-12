@@ -5,6 +5,10 @@ import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.Player;
 
+import static java.util.concurrent.CompletableFuture.completedFuture;
+
+import java.util.concurrent.CompletableFuture;
+
 public class GameTest extends Game {
 
     public GameTest(Player firstPlayer, Player secondPlayer) {
@@ -12,21 +16,24 @@ public class GameTest extends Game {
     }
 
     @Override
-    protected void beforeStart() {
+    protected CompletableFuture<Void> beforeStart() {
+        return completedFuture(null);
     }
 
     @Override
-    protected void beforeTurn() {
+    protected CompletableFuture<Void> beforeTurn() {
+        return completedFuture(null);
     }
 
     @Override
-    protected void afterTurn() {
+    protected CompletableFuture<Void> afterTurn() {
         System.out.println(getBoard().toString());
+        return completedFuture(null);
     }
 
     @Override
-    protected void onFinish(Results result) {
-        
+    protected CompletableFuture<Void> onFinish(Results result) {
+        return completedFuture(null);
     }
     
 }

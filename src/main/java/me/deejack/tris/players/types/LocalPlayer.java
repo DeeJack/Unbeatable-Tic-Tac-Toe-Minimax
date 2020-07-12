@@ -1,37 +1,33 @@
 package me.deejack.tris.players.types;
 
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
 
+import me.deejack.tris.board.Board;
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.players.DefaultPlayer;
 import me.deejack.tris.players.PlayerSymbol;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 public class LocalPlayer extends DefaultPlayer {
     private final Scanner scanner = new Scanner(System.in);
-    private String name;
-    private PlayerSymbol symbol;
 
     public LocalPlayer(int index) {
-        this("Unknown", new PlayerSymbol('?'), index);
+        this("Unknown", new PlayerSymbol('X'), index);
     }
 
     public LocalPlayer(String name, PlayerSymbol symbol, int index) {
         super(index);
-        this.name = name;
-        this.symbol = symbol;
+        setName(name);
+        setSymbol(symbol);
     }
 
     @Override
-    public PlayerSymbol getSymbol() {
-        return symbol;
+    public CompletableFuture<String> getInput(String question) {
+        sendMessage(question, false);
+        return completedFuture(scanner.nextLine());
     }
 
-    @Override
-    public String getInput(String question) {
-        System.out.print(question + " ");
-        return scanner.nextLine();
-    }
-
-    @Override
     public int getIntInput(String question) {
         boolean ok = false;
         do {
@@ -45,35 +41,46 @@ public class LocalPlayer extends DefaultPlayer {
         return scanner.nextInt();
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void askName() {
-        String name;
-        do {
-            System.out.print("Insert your name: ");
-            name = scanner.nextLine().trim();
-        } while (name.length() == 0);
-        System.out.println("Your name is: " + name);
-        this.name = name;
+    public CompletableFuture<Void> askName() {
+        var future = CompletableFuture.runAsync(() -> {
+            String name = "";
+            do {
+                name = getInput("Insert your name: ").join().trim();
+            } while (name.length() == 0);
+            sendMessage("Your name is: " + name);
+            setName(name);
+        });
+        return future;
     }
 
     public void askSymbol() {
-        char[] input;
+        char[] input = new char[0];
         do {
-            System.out.print("Insert your symbol: ");
-            input = scanner.nextLine().toCharArray(); 
+            input = getInput("Insert your symbol: ").join().trim().toCharArray();
         } while (input.length == 0);
-        
+
         char symbol = input[0];
-        System.out.println("Your symbol is: " + symbol);
-        this.symbol = new PlayerSymbol(symbol);
+        sendMessage("Your symbol is: " + symbol);
+        setSymbol(new PlayerSymbol(symbol));
     }
 
     @Override
-    public void sendMessage(String message) {
-        System.out.println(message);
+    public CompletableFuture<Void> sendMessage(String message) {
+        sendMessage(message, true);
+        return completedFuture(null);
+    }
+
+    public void sendMessage(String message, boolean newLine) {
+        if (newLine)
+            System.out.println(message);
+        else
+            System.out.print(message);
+    }
+
+    @Override
+    public CompletableFuture<Cell> getNextMove(Board board) {
+        int row = getIntInput("Select the row: ");
+        int column = getIntInput("Select the column: ");
+        return completedFuture(new Cell(row, column));
     }
 }

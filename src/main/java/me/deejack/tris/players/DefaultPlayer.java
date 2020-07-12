@@ -5,6 +5,8 @@ public abstract class DefaultPlayer implements Player {
     private int losses = 0;
     private int draws = 0;
     private int index = 0;
+    private String name;
+    private PlayerSymbol symbol;
 
     public DefaultPlayer(int index) {
         this.index = index;
@@ -45,5 +47,23 @@ public abstract class DefaultPlayer implements Player {
     @Override
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public PlayerSymbol getSymbol() {
+        return symbol;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(PlayerSymbol symbol) {
+        this.symbol = symbol;
     }
 }

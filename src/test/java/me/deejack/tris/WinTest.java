@@ -16,7 +16,7 @@ public class WinTest {
         playerOne.addInputs(0, 0, 0, 1, 0, 2, 0);
         playerTwo.addInputs(1, 1, 1, 0, 2, 0, 0);
         var game = new GameTest(playerOne, playerTwo);
-        game.start();
+        game.start().join();
         assertEquals(Results.WIN_P1, game.getResult());
     }
 
@@ -27,7 +27,7 @@ public class WinTest {
         playerOne.addInputs(1, 1, 0, 1, 0, 2);
         playerTwo.addInputs(0, 0, 1, 0, 2, 0);
         var game = new GameTest(playerOne, playerTwo);
-        game.start();
+        game.start().join();
         assertEquals(Results.WIN_P2, game.getResult());
     }
 
@@ -38,7 +38,7 @@ public class WinTest {
         playerOne.addInputs(1, 1, 0, 0, 2, 2);
         playerTwo.addInputs(0, 1, 1, 0, 2, 1);
         var game = new GameTest(playerOne, playerTwo);
-        game.start();
+        game.start().join();
         assertEquals(Results.WIN_P1, game.getResult());
     }
 
@@ -49,7 +49,7 @@ public class WinTest {
         playerOne.addInputs(1, 1, 0, 2, 2, 0);
         playerTwo.addInputs(0, 1, 1, 0, 2, 1);
         var game = new GameTest(playerOne, playerTwo);
-        game.start();
+        game.start().join();
         assertEquals(Results.WIN_P1, game.getResult());
     }
 
@@ -60,7 +60,7 @@ public class WinTest {
         playerOne.addInputs(0, 0, 0, 1, 1, 2, 1, 1, 2, 0);
         playerTwo.addInputs(0, 2, 1, 0, 2, 2, 2, 1);
         var game = new GameTest(playerOne, playerTwo);
-        game.start();
+        game.start().join();
         assertEquals(Results.DRAW, game.getResult());
     }
 }

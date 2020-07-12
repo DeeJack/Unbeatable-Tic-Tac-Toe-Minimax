@@ -1,21 +1,69 @@
 package me.deejack.tris;
 
+import java.util.Scanner;
+
+import me.deejack.tris.game.Game;
 import me.deejack.tris.game.modes.LocalMultiplayerGame;
+import me.deejack.tris.game.modes.SinglePlayerGame;
+import me.deejack.tris.players.types.MinimaxPlayer;
 
 public class Tris {
+    public static boolean DEBUG = true;
+    private final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        // var board = new Board(3);
-        // board.changeCellStatus(1, 1, new PlayerSymbol('x'));
-        // board.changeCellStatus(1, 2, new PlayerSymbol('x'));
-        // System.out.println(board.toString());
-        // var player = new LocalPlayer();
-        // player.askName();
-        // player.askSymbol();
-        var game = new LocalMultiplayerGame(3);
-        game.start();
+        var game = new Tris().chooseMode();
+        var start = game.start();
+        System.out.println("Async?");
+        start.join();
     }
 
-    public boolean isWorking() {
-        return true;
+    private int getIntInput(int min, int max) {
+        int response = 0;
+        boolean ok = false;
+        do {
+            ok = scanner.hasNextInt();
+            if (!ok) {
+                System.out.println("Insert a number!");
+                scanner.next();
+                continue;
+            }
+            response = scanner.nextInt();
+            ok = response >= min && response <= max;
+            if (!ok)
+                System.out.println("Insert a valid mode!");
+        } while (!ok);
+        return response;
+    }
+
+    private Game chooseMode() {
+        System.out.println("What mode do you want to play?");
+        System.out.println("1) Singleplayer \n2) Local multiplayer \n3) Network mulitplayer");
+        int response = getIntInput(1, 3);
+        switch (response) {
+            case 1:
+                return chooseDifficulty();
+            case 2:
+                return new LocalMultiplayerGame(3);
+            case 3:
+                return null;
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    private Game chooseDifficulty() {
+        System.out.println("Ok, choose the difficulty");
+        System.out.println("1) Normal 2) Hard 3) Impossible");
+        int difficulty = getIntInput(1, 3);
+        switch (difficulty) {
+            case 1:
+                return new SinglePlayerGame(3);
+            case 2:
+                return new SinglePlayerGame(3, new MinimaxPlayer(1));
+            case 3:
+                return new SinglePlayerGame(3, new MinimaxPlayer());
+            default:
+                throw new AssertionError();
+        }
     }
 }

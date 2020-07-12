@@ -26,7 +26,7 @@ public class MinimaxTest {
         expected[1][1].setSymbol(new PlayerSymbol('o'), 1);
             
         var minimax = new Minimax(expected, 9, 1);
-        var bestCell = minimax.getBestMove();
+        var bestCell = minimax.getBestMove().join();
         System.out.println(bestCell.getRow() + " - " + bestCell.getColumn());
         assertEquals(new Cell(2, 1), bestCell);
     }
@@ -44,7 +44,7 @@ public class MinimaxTest {
         expected[1][2].setSymbol(new PlayerSymbol('o'), 1);
             
         var minimax = new Minimax(expected, 1);
-        var bestCell = minimax.getBestMove();
+        var bestCell = minimax.getBestMove().join();
         System.out.println(bestCell.getRow() + " - " + bestCell.getColumn());
         assertEquals(new Cell(2, 0), bestCell);
     }
@@ -62,7 +62,7 @@ public class MinimaxTest {
         expected[1][2].setSymbol(new PlayerSymbol('o'), 1);
             
         var minimax = new Minimax(expected, 1);
-        var bestCell = minimax.getBestMove();
+        var bestCell = minimax.getBestMove().join();
         System.out.println(bestCell.getRow() + " - " + bestCell.getColumn());
         assertEquals(new Cell(1, 1), bestCell);
     }
@@ -76,7 +76,7 @@ public class MinimaxTest {
         expected[0][0].setSymbol(new PlayerSymbol('x'), 0);
             
         var minimax = new Minimax(expected, 1);
-        var bestCell = minimax.getBestMove();
+        var bestCell = minimax.getBestMove().join();
         System.out.println(bestCell.getRow() + " - " + bestCell.getColumn());
         assertEquals(new Cell(1, 1), bestCell);
     }

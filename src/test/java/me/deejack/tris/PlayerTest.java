@@ -17,13 +17,13 @@ public class PlayerTest {
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputStream);
         var player = new LocalPlayer(0);
-        player.askName();
-        player.askSymbol();
+        player.askName().join();
+        //player.askSymbol();
 
-        assertEquals(player.getName(), "AsD");
+        assertEquals("AsD", player.getName());
         assertNotEquals("asd", player.getName());
-        assertEquals(player.getSymbol().getSymbol(), 'x');
-        assertNotEquals(player.getSymbol().getSymbol(), 'y');
+        assertEquals('X', player.getSymbol().getSymbol());
+        assertNotEquals('Y', player.getSymbol().getSymbol());
     }
 
     @Test

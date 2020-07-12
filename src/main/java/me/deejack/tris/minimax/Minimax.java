@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.concurrent.CompletableFuture;
 
 import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 /**
  * Find the best move to win the game (or at least achieve a draw)
@@ -31,12 +33,12 @@ public class Minimax {
      * Call the minimax algorithm
      * @return The best move possible
      */
-    public Cell getBestMove() {
+    public CompletableFuture<Cell> getBestMove() {
         var bestCell = minimax(initialDepth, initialTable, true);
         if (bestCell.getValue() == null)
             throw new IllegalStateException(
                     "No action found, minimax error (bestCell = null, value = " + bestCell.getValue() + ")");
-        return bestCell.getValue();
+        return completedFuture(bestCell.getValue());
     }
 
     /**

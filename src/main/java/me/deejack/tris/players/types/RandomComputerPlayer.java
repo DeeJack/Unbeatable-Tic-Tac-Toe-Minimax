@@ -1,47 +1,43 @@
 package me.deejack.tris.players.types;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
+import me.deejack.tris.board.Board;
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.players.DefaultPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
-public class RandomComputerPlayer extends DefaultPlayer {
-    private PlayerSymbol symbol = new PlayerSymbol('O');
-    private String name;
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
+public class RandomComputerPlayer extends DefaultPlayer {
     public RandomComputerPlayer(PlayerSymbol symbol, String name) {
         super(1);
-        this.symbol = symbol;
-        this.name = name;
+        setSymbol(symbol);
+        setName(name);
     }
 
     public RandomComputerPlayer() {
-        this(new PlayerSymbol('O'), "PC0");
+        this(new PlayerSymbol('O'), "The computer");
+    }
+
+
+    @Override
+    public CompletableFuture<Void> sendMessage(String message) {
+        return completedFuture(null);
     }
 
     @Override
-    public PlayerSymbol getSymbol() {
-        return symbol;
+    public CompletableFuture<String> getInput(String question) {
+        return completedFuture("");
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getIntInput(String question) {
-        return new Random().nextInt(10);
-    }
-
-    @Override
-    public String getInput(String question) {
-        return "";
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        System.out.println(message);
+    public CompletableFuture<Cell> getNextMove(Board board) {
+        var random = new Random();
+        var emptyCells = board.getEmptyCells();
+        var nextCell = emptyCells[random.nextInt(emptyCells.length)];
+        return completedFuture(nextCell);
     }
     
 }

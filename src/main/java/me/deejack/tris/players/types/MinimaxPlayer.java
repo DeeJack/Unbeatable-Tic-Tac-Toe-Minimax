@@ -1,5 +1,11 @@
 package me.deejack.tris.players.types;
 
+import java.util.concurrent.CompletableFuture;
+import static java.util.concurrent.CompletableFuture.completedFuture;
+
+import me.deejack.tris.board.Board;
+import me.deejack.tris.board.Cell;
+import me.deejack.tris.minimax.Minimax;
 import me.deejack.tris.players.DefaultPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
@@ -9,6 +15,8 @@ public class MinimaxPlayer extends DefaultPlayer {
     public MinimaxPlayer(int depth) {
         super(1);
         this.depth = depth;
+        setName("The computer");
+        setSymbol(new PlayerSymbol('O'));
     }
 
     public MinimaxPlayer() {
@@ -16,33 +24,22 @@ public class MinimaxPlayer extends DefaultPlayer {
     }
 
     @Override
-    public PlayerSymbol getSymbol() {
-        // TODO Auto-generated method stub
-        return null;
+    public CompletableFuture<Void> sendMessage(String message) {
+        return completedFuture(null);
     }
 
     @Override
-    public String getName() {
-        // TODO Auto-generated method stub
-        return null;
+    public CompletableFuture<String> getInput(String question) {
+        return completedFuture("");
     }
 
     @Override
-    public int getIntInput(String question) {
-        // TODO Auto-generated method stub
-        return 0;
+    public CompletableFuture<Cell> getNextMove(Board board) {
+        var minimax = new Minimax(board.deepCopy().getCells(), this.depth, 1);
+        CompletableFuture<Cell> future = CompletableFuture.supplyAsync(() -> {
+            var bestMove = minimax.getBestMove().join();
+            return bestMove;
+        });
+        return future;
     }
-
-    @Override
-    public String getInput(String question) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        // TODO Auto-generated method stub
-
-    }
-    
 }

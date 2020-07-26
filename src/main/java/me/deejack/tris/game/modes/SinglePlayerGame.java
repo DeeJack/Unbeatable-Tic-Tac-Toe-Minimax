@@ -8,7 +8,6 @@ import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.types.RandomComputerPlayer;
 import me.deejack.tris.players.Player;
 import me.deejack.tris.players.types.LocalPlayer;
-import me.deejack.tris.players.types.MinimaxPlayer;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 

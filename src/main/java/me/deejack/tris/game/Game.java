@@ -9,8 +9,6 @@ import me.deejack.tris.players.Player;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.util.concurrent.CompletableFuture.completedFuture;
-
 public abstract class Game {
     private final Board board;
     private final Player[] players = new Player[2];

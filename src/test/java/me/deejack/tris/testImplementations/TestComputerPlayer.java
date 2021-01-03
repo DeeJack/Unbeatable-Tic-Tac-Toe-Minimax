@@ -10,7 +10,6 @@ import me.deejack.tris.board.Board;
 import me.deejack.tris.board.Cell;
 import me.deejack.tris.players.PlayerSymbol;
 
-import static com.ea.async.Async.await;
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
 public class TestComputerPlayer extends RandomComputerPlayer {

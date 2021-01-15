@@ -1,0 +1,32 @@
+Mettere in defaultplayer anche il symbol e ste robe comuni???
+Gameloader? mh no?
+Aggiungere eccezioni
+
+TODO: errore se faccio ctrl + c quando chiede l'input
+
+- Rifare Game in asincrono
+- Rifare player in modo che dia direttamente la cella
+- Fare la selezione delle varie modalità + 3 difficoltà
+- Fare il multiplayer
+- Creare un'animazione per il caricamento, tipo \|/
+- 
+- Cosa può fare una network room?
+    - Se è locale:
+        - Contiene il serverSocket
+        - Aspetta ed accetta il player remoto
+        - Deve prendere delle informazioni dal player remoto: Nome e mosse
+        - Deve inviare al player remoto delle informazioni (nome e mosse)
+    - Se è remoto
+        - Contiene il socket remoto
+        - Deve ricevere delle informazioni dal player remoto (nome e mosse)
+        - Deve inviare informazioni al player remoto (nome e mosse)
+
+    - In entrambi i casi:
+        - Invia e riceve dei pacchetti
+
+        - Cosa è un pacchetto? Può essere il nome o una mossa, quindi ha un tipo
+        - Rendere pacchetto generico e viene inviato il tipo e il contenuto
+        
+0) aggiungere gli eventi e la concorrenza
+
+per cose impossibili che accadano si usa new AssertionError()

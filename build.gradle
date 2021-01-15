@@ -39,7 +39,7 @@ task customFatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'me.deejack.tris.Tris'
     }
-    baseName = 'all-in-one-jar'
+    archiveFileName = 'tris_fat.jar'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }

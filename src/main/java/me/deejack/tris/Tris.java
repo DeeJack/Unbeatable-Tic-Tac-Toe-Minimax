@@ -55,15 +55,11 @@ public class Tris {
         System.out.println("Ok, choose the difficulty");
         System.out.println("1) Normal 2) Hard 3) Impossible");
         int difficulty = getIntInput(1, 3);
-        switch (difficulty) {
-            case 1:
-                return new SinglePlayerGame(3);
-            case 2:
-                return new SinglePlayerGame(3, new MinimaxPlayer(1));
-            case 3:
-                return new SinglePlayerGame(3, new MinimaxPlayer());
-            default:
-                throw new AssertionError();
-        }
+        return switch (difficulty) {
+            case 1 -> new SinglePlayerGame(3);
+            case 2 -> new SinglePlayerGame(3, new MinimaxPlayer(1));
+            case 3 -> new SinglePlayerGame(3, new MinimaxPlayer());
+            default -> throw new AssertionError();
+        };
     }
 }

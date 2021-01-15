@@ -3,7 +3,6 @@ package me.deejack.tris;
 import org.junit.Test;
 
 import me.deejack.tris.players.types.LocalPlayer;
-import me.deejack.tris.players.PlayerSymbol;
 
 import static org.junit.Assert.*;
 
@@ -28,7 +27,6 @@ public class PlayerTest {
 
     @Test
     public void testHumanPlayerInput() {
-        var humanPlayer = new LocalPlayer("asd", new PlayerSymbol('x'), 0);
         
     }
 }

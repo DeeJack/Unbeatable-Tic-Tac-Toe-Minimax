@@ -1,7 +1,6 @@
 package me.deejack.tris.players;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 import me.deejack.tris.board.Board;
 import me.deejack.tris.board.Cell;

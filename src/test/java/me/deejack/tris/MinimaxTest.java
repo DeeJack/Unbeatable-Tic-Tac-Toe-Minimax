@@ -2,15 +2,11 @@ package me.deejack.tris;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
 import me.deejack.tris.board.Cell;
 import me.deejack.tris.minimax.Minimax;
 import me.deejack.tris.players.PlayerSymbol;
-import me.deejack.tris.testImplementations.GameTest;
-import me.deejack.tris.testImplementations.TestComputerPlayer;
 
 public class MinimaxTest {
     @Test

@@ -1,19 +1,21 @@
 package me.deejack.tris;
 
+import java.io.Console;
 import java.util.Scanner;
 
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.modes.LocalMultiplayerGame;
+import me.deejack.tris.game.modes.NetworkMultiplayerGame;
 import me.deejack.tris.game.modes.SinglePlayerGame;
 import me.deejack.tris.players.types.MinimaxPlayer;
 
 public class Tris {
     public static boolean DEBUG = true;
     private final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         var game = new Tris().chooseMode();
         var start = game.start();
-        System.out.println("Async?");
         start.join();
     }
 
@@ -45,7 +47,7 @@ public class Tris {
             case 2:
                 return new LocalMultiplayerGame(3);
             case 3:
-                return null;
+                return new NetworkMultiplayerGame(3);
             default:
                 throw new AssertionError();
         }

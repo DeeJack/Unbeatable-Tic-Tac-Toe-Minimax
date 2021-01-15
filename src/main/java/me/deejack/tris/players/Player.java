@@ -1,35 +1,37 @@
 package me.deejack.tris.players;
 
-import java.util.concurrent.CompletableFuture;
-
 import me.deejack.tris.board.Board;
 import me.deejack.tris.board.Cell;
 
+import java.util.concurrent.CompletableFuture;
+
 public interface Player {
-    public PlayerSymbol getSymbol();
+  PlayerSymbol getSymbol();
 
-    public void setSymbol(PlayerSymbol symbol);
+  void setSymbol(PlayerSymbol symbol);
 
-    public String getName();
+  String getName();
 
-    public int getWins();
+  int getWins();
 
-    public int getLosses();
+  int getLosses();
 
-    public int getDraws();
+  int getDraws();
 
-    public int getIndex();
+  int getIndex();
 
-    /**
-     * -1 = loss
-     * 0 = draw
-     * 1 = win
-     */
-    public void addResult(int result);
+  /**
+   * -1 = loss
+   * 0 = draw
+   * 1 = win
+   */
+  void addResult(int result);
 
-    public CompletableFuture<Void> sendMessage(String message);
+  CompletableFuture<Void> sendMessage(String message);
 
-    public CompletableFuture<String> getInput(String question);
+  CompletableFuture<String> getInput(String question);
 
-    public CompletableFuture<Cell> getNextMove(Board board);
+  CompletableFuture<Cell> getNextMove(Board board);
+
+  CompletableFuture<Void> askName();
 }

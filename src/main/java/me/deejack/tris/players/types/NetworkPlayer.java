@@ -5,17 +5,21 @@ import me.deejack.tris.board.Cell;
 import me.deejack.tris.players.DefaultPlayer;
 import me.deejack.tris.players.PlayerSymbol;
 
+import java.net.Socket;
 import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
 public class NetworkPlayer extends DefaultPlayer {
-  public NetworkPlayer(int index) {
-    this("Unknown", new PlayerSymbol('X'), index);
+  private final Socket socket;
+
+  public NetworkPlayer(int index, Socket socket) {
+    this("Unknown", new PlayerSymbol('O'), index, socket);
   }
 
-  public NetworkPlayer(String name, PlayerSymbol symbol, int index) {
+  public NetworkPlayer(String name, PlayerSymbol symbol, int index, Socket socket) {
     super(index);
+    this.socket = socket;
     setName(name);
     setSymbol(symbol);
   }
@@ -30,6 +34,7 @@ public class NetworkPlayer extends DefaultPlayer {
     return -1;
   }
 
+  @Override
   public CompletableFuture<Void> askName() {
     var future = CompletableFuture.runAsync(() -> {
       String name = "";

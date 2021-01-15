@@ -42,6 +42,7 @@ public class LocalPlayer extends DefaultPlayer {
     return scanner.nextInt();
   }
 
+  @Override
   public CompletableFuture<Void> askName() {
     var future = CompletableFuture.runAsync(() -> {
       String name = "";
@@ -55,7 +56,7 @@ public class LocalPlayer extends DefaultPlayer {
   }
 
   public void askSymbol() {
-    char[] input = new char[0];
+    char[] input;
     do {
       input = getInput("Insert your symbol: ").join().trim().toCharArray();
     } while (input.length == 0);

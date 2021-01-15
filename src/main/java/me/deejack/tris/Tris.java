@@ -2,10 +2,14 @@ package me.deejack.tris;
 
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.modes.LocalMultiplayerGame;
-import me.deejack.tris.game.modes.NetworkMultiplayerGame;
 import me.deejack.tris.game.modes.SinglePlayerGame;
+import me.deejack.tris.networking.LocalNetworkRoom;
+import me.deejack.tris.networking.NetworkRoom;
+import me.deejack.tris.networking.RemoteNetworkRoom;
 import me.deejack.tris.players.types.MinimaxPlayer;
+import me.deejack.tris.utils.LoadingAnimation;
 
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Tris {
@@ -14,6 +18,8 @@ public class Tris {
 
   public static void main(String[] args) {
     var game = new Tris().chooseMode();
+    if (game == null)
+      return;
     var start = game.start();
     start.join();
   }
@@ -33,6 +39,7 @@ public class Tris {
       if (!ok)
         System.out.println("Insert a valid mode!");
     } while (!ok);
+    scanner.nextLine();
     return response;
   }
 
@@ -43,7 +50,7 @@ public class Tris {
     return switch (response) {
       case 1 -> chooseDifficulty();
       case 2 -> new LocalMultiplayerGame(3);
-      case 3 -> new NetworkMultiplayerGame(3);
+      case 3 -> chooseNetworkGame();
       default -> throw new AssertionError();
     };
   }
@@ -58,5 +65,40 @@ public class Tris {
       case 3 -> new SinglePlayerGame(3, new MinimaxPlayer());
       default -> throw new AssertionError();
     };
+  }
+
+  private Game chooseNetworkGame() {
+    System.out.println("Ok, choose the type of network game");
+    System.out.println("1) Host 2) Connect to remote host");
+    int choice = getIntInput(1, 2);
+    if (choice == 1) {
+      try {
+        return getRemoteGame(new LocalNetworkRoom());
+      } catch (UnknownHostException e) {
+        e.printStackTrace();
+        return null;
+      }
+    } else if (choice == 2) {
+      System.out.print("Address: ");
+      scanner.reset();
+      String address = scanner.nextLine();
+      System.out.println("Port: ");
+      int port = getIntInput(0, Integer.MAX_VALUE);
+      return getRemoteGame(new RemoteNetworkRoom(address, port));
+    } else {
+      throw new AssertionError();
+    }
+  }
+
+  private Game getRemoteGame(NetworkRoom room) {
+    var load = new LoadingAnimation();
+    load.start();
+    var game = room.startGame().join();
+    load.stop();
+    if (game.isEmpty()) {
+      System.out.println("Couldn't start the local server");
+      return null;
+    }
+    return game.get();
   }
 }

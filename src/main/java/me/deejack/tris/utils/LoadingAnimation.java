@@ -12,25 +12,26 @@ public class LoadingAnimation {
 
   public void start() {
     stopped = false;
-    currentTask = CompletableFuture.runAsync(() -> {
+    currentTask = CompletableFuture.supplyAsync(() -> {
       do {
-        System.out.printf("\\");
-        System.out.printf("\b");
+        System.out.print("\\");
+        System.out.print("\b");
         pause(600);
-        System.out.printf("|");
-        System.out.printf("\b");
+        System.out.print("|");
+        System.out.print("\b");
         pause(600);
-        System.out.printf("/");
-        System.out.printf("\b");
+        System.out.print("/");
+        System.out.print("\b");
         pause(600);
       } while (!stopped);
+      return null;
     });
   }
 
   private void pause(int millis) {
     try {
       Thread.sleep(millis);
-    } catch (InterruptedException ex) {
+    } catch (InterruptedException ignored) {
     }
   }
 

@@ -43,4 +43,9 @@ public class MinimaxPlayer extends DefaultPlayer {
     });
     return future;
   }
+
+  @Override
+  public CompletableFuture<Void> askName() {
+    return CompletableFuture.completedFuture(null);
+  }
 }

@@ -40,4 +40,9 @@ public class RandomComputerPlayer extends DefaultPlayer {
     return completedFuture(nextCell);
   }
 
+  @Override
+  public CompletableFuture<Void> askName() {
+    return CompletableFuture.completedFuture(null);
+  }
+
 }

@@ -45,7 +45,7 @@ public class Tris {
 
   private Game chooseMode() {
     System.out.println("What mode do you want to play?");
-    System.out.println("1) Singleplayer \n2) Local multiplayer \n3) Network mulitplayer");
+    System.out.println("1) Singleplayer \n2) Local multiplayer \n3) Multiplayer (remote)");
     int response = getIntInput(1, 3);
     return switch (response) {
       case 1 -> chooseDifficulty();

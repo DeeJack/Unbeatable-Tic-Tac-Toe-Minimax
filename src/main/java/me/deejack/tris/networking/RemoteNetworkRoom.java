@@ -1,6 +1,8 @@
 package me.deejack.tris.networking;
 
-import me.deejack.tris.game.modes.NetworkMultiplayerGame;
+import me.deejack.tris.game.Game;
+import me.deejack.tris.game.modes.multiplayer.LocalRoomGame;
+import me.deejack.tris.game.modes.multiplayer.RemoteRoomGame;
 import me.deejack.tris.players.types.NetworkPlayer;
 
 import java.io.IOException;
@@ -28,12 +30,12 @@ public class RemoteNetworkRoom implements NetworkRoom {
   }
 
   @Override
-  public CompletableFuture<Optional<NetworkMultiplayerGame>> startGame() {
+  public CompletableFuture<Optional<Game>> startGame() {
     return CompletableFuture.supplyAsync(() -> {
       var remoteSocket = start().join();
       if (remoteSocket == null)
         return Optional.empty();
-      return Optional.of(new NetworkMultiplayerGame(new NetworkPlayer(1, remoteSocket), 3));
+      return Optional.of(new RemoteRoomGame(new NetworkPlayer(0, remoteSocket), 3));
     });
   }
 

@@ -37,6 +37,7 @@ public class LoadingAnimation {
 
   public void stop() {
     if (currentTask != null && !currentTask.isCancelled()) {
+      System.out.print("\b");
       currentTask.cancel(true);
     }
   }

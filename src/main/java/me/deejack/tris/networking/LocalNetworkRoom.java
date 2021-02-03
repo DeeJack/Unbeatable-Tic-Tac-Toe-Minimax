@@ -1,6 +1,7 @@
 package me.deejack.tris.networking;
 
-import me.deejack.tris.game.modes.NetworkMultiplayerGame;
+import me.deejack.tris.game.Game;
+import me.deejack.tris.game.modes.multiplayer.LocalRoomGame;
 import me.deejack.tris.players.types.NetworkPlayer;
 
 import java.io.IOException;
@@ -78,11 +79,11 @@ public class LocalNetworkRoom implements NetworkRoom {
    * When the player is accepted, if there is no problem, the instance of the MultiPlayerGame will be returned
    * If an 'empty' optional is returned, an error occurred
    *
-   * @return A {@link Optional<NetworkMultiplayerGame>} if the server is opened successfully and the player has been accepted,
+   * @return A {@link Optional< LocalRoomGame >} if the server is opened successfully and the player has been accepted,
    * it will return an {@link Optional#empty()} otherwise.
    */
   @Override
-  public CompletableFuture<Optional<NetworkMultiplayerGame>> startGame() {
+  public CompletableFuture<Optional<Game>> startGame() {
     return CompletableFuture.supplyAsync(() -> {
       startServer();
       if (!open || server.isClosed())
@@ -91,7 +92,7 @@ public class LocalNetworkRoom implements NetworkRoom {
       if (optionalPlayer.isEmpty())
         return Optional.empty();
       System.out.println("Player accepted");
-      return Optional.of(new NetworkMultiplayerGame(optionalPlayer.get(), 3));
+      return Optional.of(new LocalRoomGame(optionalPlayer.get(), 3));
     });
   }
 

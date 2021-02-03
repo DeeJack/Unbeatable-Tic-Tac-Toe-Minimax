@@ -1,4 +1,4 @@
-package me.deejack.tris.game.modes;
+package me.deejack.tris.game.modes.multiplayer;
 
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.logic.DefaultGameLogic;
@@ -12,28 +12,28 @@ import java.util.concurrent.CompletableFuture;
 
 import static java.util.concurrent.CompletableFuture.completedFuture;
 
-public class NetworkMultiplayerGame extends Game {
+public class RemoteRoomGame extends Game {
   private final LoadingAnimation loadingAnimation = new LoadingAnimation();
   private final LocalPlayer localPlayer;
   private final NetworkPlayer networkPlayer;
 
-  public NetworkMultiplayerGame(NetworkPlayer networkPlayer, int columns) {
-    super(new LocalPlayer(0), networkPlayer, new DefaultGameLogic(columns), columns);
+  public RemoteRoomGame(NetworkPlayer networkPlayer, int columns) {
+    super(networkPlayer, new LocalPlayer(1), new DefaultGameLogic(columns), columns);
     this.networkPlayer = networkPlayer;
-    this.localPlayer = (LocalPlayer) getPlayers()[0];
+    this.localPlayer = (LocalPlayer) getPlayers()[1];
   }
 
   @Override
   protected CompletableFuture<Void> beforeStart() {
     System.out.println("------------P1---------------");
-    localPlayer.askName().join();
-    localPlayer.setSymbol(new PlayerSymbol('X'));
-    //players[0].askSymbol();
-    System.out.println("------------P2---------------");
     loadingAnimation.start();
     networkPlayer.askName().join();
+    networkPlayer.setSymbol(new PlayerSymbol('X'));
     loadingAnimation.stop();
-    networkPlayer.setSymbol(new PlayerSymbol('O'));
+    //players[0].askSymbol();
+    System.out.println("------------P2---------------");
+    localPlayer.askName().join();
+    localPlayer.setSymbol(new PlayerSymbol('O'));
     //players[1].askSymbol();
     return completedFuture(null);
   }

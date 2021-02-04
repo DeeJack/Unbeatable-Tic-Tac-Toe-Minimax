@@ -36,7 +36,7 @@ public class NetworkPlayer extends DefaultPlayer {
     System.out.println("WAITING FOR A MESSAGE");
     var message = messageHandler.receiveMessage().join();
     var textMessage = message.map(Message::getMessage).orElse("");
-    System.out.println("RETURNING MESSAGE RECEIVED: " + textMessage);
+    //System.out.println("RETURNING MESSAGE RECEIVED: " + textMessage);
     return completedFuture(textMessage);
   }
 
@@ -58,14 +58,14 @@ public class NetworkPlayer extends DefaultPlayer {
 
   @Override
   public CompletableFuture<Void> sendMessage(String message) {
-    messageHandler.sendMessage(new Message(message)).join();
+    messageHandler.sendMessage(new Message(message + "|" + getIndex())).join();
     return completedFuture(null);
   }
 
   @Override
   public CompletableFuture<Cell> getNextMove(Board board) {
-    int row = getIntInput("Select the row: ");
-    int column = getIntInput("Select the column: ");
+    int row = getIntInput("");
+    int column = getIntInput("");
     return completedFuture(new Cell(row, column));
   }
 }

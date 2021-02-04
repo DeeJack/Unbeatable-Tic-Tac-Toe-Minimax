@@ -1,5 +1,6 @@
 package me.deejack.tris.game.modes;
 
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
@@ -38,6 +39,11 @@ public class SinglePlayerGame extends Game {
   @Override
   public CompletableFuture<Void> onFinish(Results result) {
     System.out.println(result);
+    return completedFuture(null);
+  }
+
+  @Override
+  protected CompletableFuture<Void> afterMove(Cell move) {
     return completedFuture(null);
   }
 

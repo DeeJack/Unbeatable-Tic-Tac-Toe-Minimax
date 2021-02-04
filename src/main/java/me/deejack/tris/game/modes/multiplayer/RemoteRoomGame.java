@@ -1,5 +1,6 @@
 package me.deejack.tris.game.modes.multiplayer;
 
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
@@ -34,6 +35,7 @@ public class RemoteRoomGame extends Game {
     System.out.println("------------P2---------------");
     localPlayer.askName().join();
     localPlayer.setSymbol(new PlayerSymbol('O'));
+    networkPlayer.sendMessage(localPlayer.getName()).join();
     //players[1].askSymbol();
     return completedFuture(null);
   }
@@ -47,6 +49,14 @@ public class RemoteRoomGame extends Game {
   protected CompletableFuture<Void> onFinish(Results result) {
     System.out.println(result);
     return completedFuture(null);
+  }
+
+  @Override
+  protected CompletableFuture<Void> afterMove(Cell move) {
+    return CompletableFuture.runAsync(() -> {
+      networkPlayer.sendMessage(move.getRow() + "");
+      networkPlayer.sendMessage(move.getColumn() + "");
+    });
   }
 
   @Override

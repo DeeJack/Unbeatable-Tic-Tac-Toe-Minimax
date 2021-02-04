@@ -5,6 +5,7 @@ import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.logic.GameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.Player;
+import me.deejack.tris.players.types.NetworkPlayer;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,15 +33,19 @@ public abstract class Game {
 
   protected CompletableFuture<Void> onTurn() {
     var currentPlayer = players[round.get() % 2];
+    boolean isRemotePlayer = currentPlayer instanceof NetworkPlayer;
     var future = CompletableFuture.runAsync(() -> {
-      currentPlayer.sendMessage("It's your turn, " + currentPlayer.getName());
+      if (!isRemotePlayer)
+        currentPlayer.sendMessage("It's your turn, " + currentPlayer.getName());
       Cell choosenCell;
       boolean result;
       do {
         choosenCell = currentPlayer.getNextMove(board).join();
         result = board.changeCellStatus(choosenCell.getRow(), choosenCell.getColumn(), currentPlayer);
-        if (!result)
+        if (!result && !isRemotePlayer)
           currentPlayer.sendMessage("Incorrect data, please try again").join();
+        if (result && !isRemotePlayer)
+          afterMove(choosenCell);
       } while (!result);
       var gameResult = logic.checkWin(choosenCell.getRow(), choosenCell.getColumn(), round.get() % 2);
       if (gameResult != Results.NONE) {
@@ -54,6 +59,8 @@ public abstract class Game {
   }
 
   protected abstract CompletableFuture<Void> afterTurn();
+
+  protected abstract CompletableFuture<Void> afterMove(Cell move);
 
   public CompletableFuture<Results> start() {
     CompletableFuture<Results> future = CompletableFuture.supplyAsync(() -> {

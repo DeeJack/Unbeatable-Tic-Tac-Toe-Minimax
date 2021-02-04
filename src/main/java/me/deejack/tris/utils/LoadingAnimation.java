@@ -10,7 +10,7 @@ public class LoadingAnimation {
 
   }
 
-  public void start() {
+  public void start() {/*
     stopped = false;
     currentTask = CompletableFuture.supplyAsync(() -> {
       do {
@@ -25,7 +25,7 @@ public class LoadingAnimation {
         pause(600);
       } while (!stopped);
       return null;
-    });
+    });*/
   }
 
   private void pause(int millis) {

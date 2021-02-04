@@ -1,5 +1,6 @@
 package me.deejack.tris.game.modes.multiplayer;
 
+import me.deejack.tris.board.Cell;
 import me.deejack.tris.game.Game;
 import me.deejack.tris.game.logic.DefaultGameLogic;
 import me.deejack.tris.game.logic.Results;
@@ -40,7 +41,16 @@ public class LocalRoomGame extends Game {
 
   @Override
   protected CompletableFuture<Void> beforeTurn() {
+    System.out.println("------------------- STARTING THE GAME ----------");
     return completedFuture(null);
+  }
+
+  @Override
+  protected CompletableFuture<Void> afterMove(Cell move) {
+    return CompletableFuture.runAsync(() -> {
+      networkPlayer.sendMessage(move.getRow() + "");
+      networkPlayer.sendMessage(move.getColumn() + "");
+    });
   }
 
   @Override

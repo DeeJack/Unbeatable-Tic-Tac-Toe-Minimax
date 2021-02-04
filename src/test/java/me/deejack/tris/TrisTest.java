@@ -3,52 +3,51 @@
  */
 package me.deejack.tris;
 
-import org.junit.Test;
-
 import me.deejack.tris.board.Board;
 import me.deejack.tris.board.Cell;
-import me.deejack.tris.players.types.LocalPlayer;
 import me.deejack.tris.players.PlayerSymbol;
+import me.deejack.tris.players.types.LocalPlayer;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class TrisTest {
-    @Test
-    public void testEmptyBoard() {
-        var board = new Board(3);
-        var expected = new Cell[][] { new Cell[] { new Cell(0, 0), new Cell(0, 1), new Cell(0, 2) },
-                new Cell[] { new Cell(1, 0), new Cell(1, 1), new Cell(1, 2) }, new Cell[] { new Cell(2, 0), new Cell(2, 1), new Cell(2, 2) }, };
-        assertArrayEquals(expected, board.getCells());
+  @Test
+  public void testEmptyBoard() {
+    var board = new Board(3);
+    var expected = new Cell[][]{new Cell[]{new Cell(0, 0), new Cell(0, 1), new Cell(0, 2)},
+            new Cell[]{new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)}, new Cell[]{new Cell(2, 0), new Cell(2, 1), new Cell(2, 2)},};
+    assertArrayEquals(expected, board.getCells());
+  }
+
+  @Test
+  public void testOneMove() {
+    var board = new Board(3);
+    var expected = new Cell[][]{new Cell[]{new Cell(0, 0), new Cell(0, 1), new Cell(0, 2)},
+            new Cell[]{new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)}, new Cell[]{new Cell(2, 0), new Cell(2, 1), new Cell(2, 2)},};
+    expected[0][1].setSymbol(new PlayerSymbol('x'), 0);
+    assertTrue(board.changeCellStatus(0, 1, new LocalPlayer("a", new PlayerSymbol('x'), 0)));
+    System.out.println(expected[0][1].getSymbol() + " " + board.getCells()[0][1].getSymbol());
+    assertArrayEquals(expected, board.getCells());
+  }
+
+  @Test
+  public void testFullBoard() {
+    var board = new Board(3);
+    var expected = new Cell[][]{new Cell[]{new Cell(0, 0), new Cell(0, 1), new Cell(0, 2)},
+            new Cell[]{new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)}, new Cell[]{new Cell(2, 0), new Cell(2, 1), new Cell(2, 2)},};
+
+    var firstPlayer = new LocalPlayer("a", new PlayerSymbol('x'), 0);
+    var secondPlayer = new LocalPlayer("a", new PlayerSymbol('x'), 0);
+    for (int i = 0; i < expected.length; i++) {
+      expected[0][1].setSymbol(new PlayerSymbol(i % 2 == 0 ? 'x' : 'o'), i % 2);
+      board.changeCellStatus(0, 1, i % 2 == 0 ? firstPlayer : secondPlayer);
     }
 
-    @Test
-    public void testOneMove() {
-        var board = new Board(3);
-        var expected = new Cell[][] { new Cell[] { new Cell(0, 0), new Cell(0, 1), new Cell(0, 2) },
-                new Cell[] { new Cell(1, 0), new Cell(1, 1), new Cell(1, 2) }, new Cell[] { new Cell(2, 0), new Cell(2, 1), new Cell(2, 2) }, };
-        expected[0][1].setSymbol(new PlayerSymbol('x'), 0);
-        assertTrue(board.changeCellStatus(0, 1, new LocalPlayer("a", new PlayerSymbol('x'), 0)));
-        System.out.println(expected[0][1].getSymbol() + " " + board.getCells()[0][1].getSymbol());
-        assertArrayEquals(expected, board.getCells());
-    }
+    assertArrayEquals(expected, board.getCells());
 
-    @Test
-    public void testFullBoard() {
-        var board = new Board(3);
-        var expected = new Cell[][] { new Cell[] { new Cell(0, 0), new Cell(0, 1), new Cell(0, 2) },
-                new Cell[] { new Cell(1, 0), new Cell(1, 1), new Cell(1, 2) }, new Cell[] { new Cell(2, 0), new Cell(2, 1), new Cell(2, 2) }, };
-        
-        var firstPlayer = new LocalPlayer("a", new PlayerSymbol('x'), 0);
-        var secondPlayer = new LocalPlayer("a", new PlayerSymbol('x'), 0);
-        for (int i = 0; i < expected.length; i++) {
-            expected[0][1].setSymbol(new PlayerSymbol(i % 2 == 0 ? 'x' : 'o'), i % 2);
-            board.changeCellStatus(0, 1, i % 2 == 0 ? firstPlayer : secondPlayer);
-        }
-
-        assertArrayEquals(expected, board.getCells());
-
-        expected[0][0].setSymbol(new PlayerSymbol('a'), 0);
-        assertNotEquals(expected, board.getCells());
-        System.out.println(board.toString());
-    }
+    expected[0][0].setSymbol(new PlayerSymbol('a'), 0);
+    assertNotEquals(expected, board.getCells());
+    System.out.println(board.toString());
+  }
 }

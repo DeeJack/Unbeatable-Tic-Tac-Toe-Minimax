@@ -1,7 +1,6 @@
 package me.deejack.tris.networking;
 
 import me.deejack.tris.game.Game;
-import me.deejack.tris.game.modes.multiplayer.LocalRoomGame;
 import me.deejack.tris.game.modes.multiplayer.RemoteRoomGame;
 import me.deejack.tris.players.types.NetworkPlayer;
 

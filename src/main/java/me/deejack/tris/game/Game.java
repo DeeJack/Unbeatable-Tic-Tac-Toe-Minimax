@@ -6,6 +6,7 @@ import me.deejack.tris.game.logic.GameLogic;
 import me.deejack.tris.game.logic.Results;
 import me.deejack.tris.players.Player;
 import me.deejack.tris.players.types.NetworkPlayer;
+import me.deejack.tris.utils.Console;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -64,6 +65,7 @@ public abstract class Game {
 
   public CompletableFuture<Results> start() {
     CompletableFuture<Results> future = CompletableFuture.supplyAsync(() -> {
+      Console.clear();
       beforeStart().join();
       /*
        * if (players[0].getSymbol().equals(players[1].getSymbol())) { players[0].
@@ -73,6 +75,7 @@ public abstract class Game {
        * ); return completedFuture(Results.NONE); }
        */
       do {
+        Console.clear();
         beforeTurn().join();
         onTurn().join();
         afterTurn().join();

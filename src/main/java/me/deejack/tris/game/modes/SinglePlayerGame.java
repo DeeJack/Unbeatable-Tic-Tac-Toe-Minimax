@@ -33,6 +33,7 @@ public class SinglePlayerGame extends Game {
 
   @Override
   public CompletableFuture<Void> beforeTurn() {
+    System.out.println(getBoard().toString());
     return completedFuture(null);
   }
 
